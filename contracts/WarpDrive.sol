@@ -33,37 +33,33 @@ contract ShareWrapper {
     }
 
     function withdraw(uint256 amount) public virtual {
-        uint256 masonShare = _balances[msg.sender];
-        require(masonShare >= amount, "Masonry: withdraw request greater than staked amount");
+        uint256 userShare = _balances[msg.sender];
+        require(userShare >= amount, "Warp Drive: withdraw request greater than staked amount");
         _totalSupply = _totalSupply.sub(amount);
-        _balances[msg.sender] = masonShare.sub(amount);
+        _balances[msg.sender] = userShare.sub(amount);
         share.safeTransfer(msg.sender, amount);
     }
 }
 
 /*
-  ______                __       _______
- /_  __/___  ____ ___  / /_     / ____(_)___  ____ _____  ________
-  / / / __ \/ __ `__ \/ __ \   / /_  / / __ \/ __ `/ __ \/ ___/ _ \
- / / / /_/ / / / / / / /_/ /  / __/ / / / / / /_/ / / / / /__/  __/
-/_/  \____/_/ /_/ /_/_.___/  /_/   /_/_/ /_/\__,_/_/ /_/\___/\___/
 
-    http://tomb.finance
+Polarlys Finance
+
 */
-contract Masonry is ShareWrapper, ContractGuard {
+contract WarpDrive is ShareWrapper, ContractGuard {
     using SafeERC20 for IERC20;
     using Address for address;
     using SafeMath for uint256;
 
     /* ========== DATA STRUCTURES ========== */
 
-    struct Masonseat {
+    struct Warpseat {
         uint256 lastSnapshotIndex;
         uint256 rewardEarned;
         uint256 epochTimerStart;
     }
 
-    struct MasonrySnapshot {
+    struct WarpDriveSnapshot {
         uint256 time;
         uint256 rewardReceived;
         uint256 rewardPerShare;
@@ -77,11 +73,11 @@ contract Masonry is ShareWrapper, ContractGuard {
     // flags
     bool public initialized = false;
 
-    IERC20 public tomb;
+    IERC20 public nebula;
     ITreasury public treasury;
 
-    mapping(address => Masonseat) public masons;
-    MasonrySnapshot[] public masonryHistory;
+    mapping(address => Warpseat) public warpers;
+    WarpDriveSnapshot[] public warpdriveHistory;
 
     uint256 public withdrawLockupEpochs;
     uint256 public rewardLockupEpochs;
@@ -97,43 +93,43 @@ contract Masonry is ShareWrapper, ContractGuard {
     /* ========== Modifiers =============== */
 
     modifier onlyOperator() {
-        require(operator == msg.sender, "Masonry: caller is not the operator");
+        require(operator == msg.sender, "Warp Drive: caller is not the operator");
         _;
     }
 
-    modifier masonExists {
-        require(balanceOf(msg.sender) > 0, "Masonry: The mason does not exist");
+    modifier masonExists() {
+        require(balanceOf(msg.sender) > 0, "Warp Drive: The mason does not exist");
         _;
     }
 
-    modifier updateReward(address mason) {
-        if (mason != address(0)) {
-            Masonseat memory seat = masons[mason];
-            seat.rewardEarned = earned(mason);
+    modifier updateReward(address warper) {
+        if (warper != address(0)) {
+            Warpseat memory seat = warpers[warper];
+            seat.rewardEarned = earned(warper);
             seat.lastSnapshotIndex = latestSnapshotIndex();
-            masons[mason] = seat;
+            warpers[warper] = seat;
         }
         _;
     }
 
-    modifier notInitialized {
-        require(!initialized, "Masonry: already initialized");
+    modifier notInitialized() {
+        require(!initialized, "Warp Drive: already initialized");
         _;
     }
 
     /* ========== GOVERNANCE ========== */
 
     function initialize(
-        IERC20 _tomb,
+        IERC20 _nebula,
         IERC20 _share,
         ITreasury _treasury
     ) public notInitialized {
-        tomb = _tomb;
+        tomb = _nebula;
         share = _share;
         treasury = _treasury;
 
-        MasonrySnapshot memory genesisSnapshot = MasonrySnapshot({time : block.number, rewardReceived : 0, rewardPerShare : 0});
-        masonryHistory.push(genesisSnapshot);
+        WarpDriveSnapshot memory genesisSnapshot = WarpDriveSnapshot({time: block.number, rewardReceived: 0, rewardPerShare: 0});
+        warpdriveHistory.push(genesisSnapshot);
 
         withdrawLockupEpochs = 6; // Lock for 6 epochs (36h) before release withdraw
         rewardLockupEpochs = 3; // Lock for 3 epochs (18h) before release claimReward
@@ -161,24 +157,24 @@ contract Masonry is ShareWrapper, ContractGuard {
         return masonryHistory.length.sub(1);
     }
 
-    function getLatestSnapshot() internal view returns (MasonrySnapshot memory) {
-        return masonryHistory[latestSnapshotIndex()];
+    function getLatestSnapshot() internal view returns (WarpDriveSnapshot memory) {
+        return warpdriveHistory[latestSnapshotIndex()];
     }
 
-    function getLastSnapshotIndexOf(address mason) public view returns (uint256) {
-        return masons[mason].lastSnapshotIndex;
+    function getLastSnapshotIndexOf(address warper) public view returns (uint256) {
+        return warpers[warper].lastSnapshotIndex;
     }
 
-    function getLastSnapshotOf(address mason) internal view returns (MasonrySnapshot memory) {
-        return masonryHistory[getLastSnapshotIndexOf(mason)];
+    function getLastSnapshotOf(address warper) internal view returns (WarpDriveSnapshot memory) {
+        return warpdriveHistory[getLastSnapshotIndexOf(warper)];
     }
 
-    function canWithdraw(address mason) external view returns (bool) {
-        return masons[mason].epochTimerStart.add(withdrawLockupEpochs) <= treasury.epoch();
+    function canWithdraw(address warper) external view returns (bool) {
+        return warpers[warper].epochTimerStart.add(withdrawLockupEpochs) <= treasury.epoch();
     }
 
     function canClaimReward(address mason) external view returns (bool) {
-        return masons[mason].epochTimerStart.add(rewardLockupEpochs) <= treasury.epoch();
+        return warpers[warper].epochTimerStart.add(rewardLockupEpochs) <= treasury.epoch();
     }
 
     function epoch() external view returns (uint256) {
@@ -189,35 +185,35 @@ contract Masonry is ShareWrapper, ContractGuard {
         return treasury.nextEpochPoint();
     }
 
-    function getTombPrice() external view returns (uint256) {
-        return treasury.getTombPrice();
+    function getNebulaPrice() external view returns (uint256) {
+        return treasury.getNebulaPrice();
     }
 
-    // =========== Mason getters
+    // =========== Nebula getters
 
     function rewardPerShare() public view returns (uint256) {
         return getLatestSnapshot().rewardPerShare;
     }
 
-    function earned(address mason) public view returns (uint256) {
+    function earned(address warper) public view returns (uint256) {
         uint256 latestRPS = getLatestSnapshot().rewardPerShare;
         uint256 storedRPS = getLastSnapshotOf(mason).rewardPerShare;
 
-        return balanceOf(mason).mul(latestRPS.sub(storedRPS)).div(1e18).add(masons[mason].rewardEarned);
+        return balanceOf(warper).mul(latestRPS.sub(storedRPS)).div(1e18).add(warpers[warper].rewardEarned);
     }
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
     function stake(uint256 amount) public override onlyOneBlock updateReward(msg.sender) {
-        require(amount > 0, "Masonry: Cannot stake 0");
+        require(amount > 0, "Warp Drive: Cannot stake 0");
         super.stake(amount);
         masons[msg.sender].epochTimerStart = treasury.epoch(); // reset timer
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) public override onlyOneBlock masonExists updateReward(msg.sender) {
-        require(amount > 0, "Masonry: Cannot withdraw 0");
-        require(masons[msg.sender].epochTimerStart.add(withdrawLockupEpochs) <= treasury.epoch(), "Masonry: still in withdraw lockup");
+    function withdraw(uint256 amount) public override onlyOneBlock warperExists updateReward(msg.sender) {
+        require(amount > 0, "Warp Drive: Cannot withdraw 0");
+        require(warpers[msg.sender].epochTimerStart.add(withdrawLockupEpochs) <= treasury.epoch(), "Warp Drive: still in withdraw lockup");
         claimReward();
         super.withdraw(amount);
         emit Withdrawn(msg.sender, amount);
@@ -228,38 +224,38 @@ contract Masonry is ShareWrapper, ContractGuard {
     }
 
     function claimReward() public updateReward(msg.sender) {
-        uint256 reward = masons[msg.sender].rewardEarned;
+        uint256 reward = warpers[msg.sender].rewardEarned;
         if (reward > 0) {
-            require(masons[msg.sender].epochTimerStart.add(rewardLockupEpochs) <= treasury.epoch(), "Masonry: still in reward lockup");
-            masons[msg.sender].epochTimerStart = treasury.epoch(); // reset timer
-            masons[msg.sender].rewardEarned = 0;
-            tomb.safeTransfer(msg.sender, reward);
+            require(warpers[msg.sender].epochTimerStart.add(rewardLockupEpochs) <= treasury.epoch(), "Warp Drive: still in reward lockup");
+            warpers[msg.sender].epochTimerStart = treasury.epoch(); // reset timer
+            warpers[msg.sender].rewardEarned = 0;
+            nebula.safeTransfer(msg.sender, reward);
             emit RewardPaid(msg.sender, reward);
         }
     }
 
     function allocateSeigniorage(uint256 amount) external onlyOneBlock onlyOperator {
-        require(amount > 0, "Masonry: Cannot allocate 0");
-        require(totalSupply() > 0, "Masonry: Cannot allocate when totalSupply is 0");
+        require(amount > 0, "Warp Drive: Cannot allocate 0");
+        require(totalSupply() > 0, "Warp Drive: Cannot allocate when totalSupply is 0");
 
         // Create & add new snapshot
         uint256 prevRPS = getLatestSnapshot().rewardPerShare;
         uint256 nextRPS = prevRPS.add(amount.mul(1e18).div(totalSupply()));
 
-        MasonrySnapshot memory newSnapshot = MasonrySnapshot({
-            time: block.number,
-            rewardReceived: amount,
-            rewardPerShare: nextRPS
-        });
-        masonryHistory.push(newSnapshot);
+        WarpDriveSnapshot memory newSnapshot = WarpDriveSnapshot({time: block.number, rewardReceived: amount, rewardPerShare: nextRPS});
+        warpdriveHistory.push(newSnapshot);
 
-        tomb.safeTransferFrom(msg.sender, address(this), amount);
+        nebula.safeTransferFrom(msg.sender, address(this), amount);
         emit RewardAdded(msg.sender, amount);
     }
 
-    function governanceRecoverUnsupported(IERC20 _token, uint256 _amount, address _to) external onlyOperator {
+    function governanceRecoverUnsupported(
+        IERC20 _token,
+        uint256 _amount,
+        address _to
+    ) external onlyOperator {
         // do not allow to drain core tokens
-        require(address(_token) != address(tomb), "tomb");
+        require(address(_token) != address(nebula), "nebula");
         require(address(_token) != address(share), "share");
         _token.safeTransfer(_to, _amount);
     }

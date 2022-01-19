@@ -8,44 +8,48 @@ import "@openzeppelin/contracts/token/ERC20/ERC20Burnable.sol";
 import "./owner/Operator.sol";
 
 /*
-  ______                __       _______
- /_  __/___  ____ ___  / /_     / ____(_)___  ____ _____  ________
-  / / / __ \/ __ `__ \/ __ \   / /_  / / __ \/ __ `/ __ \/ ___/ _ \
- / / / /_/ / / / / / / /_/ /  / __/ / / / / / /_/ / / / / /__/  __/
-/_/  \____/_/ /_/ /_/_.___/  /_/   /_/_/ /_/\__,_/_/ /_/\___/\___/
 
-    http://tomb.finance
+Polarlys Finance
+
 */
-contract TShare is ERC20Burnable, Operator {
+contract Borealis is ERC20Burnable, Operator {
     using SafeMath for uint256;
 
-    // TOTAL MAX SUPPLY = 70,000 tSHAREs
+    // TOTAL MAX SUPPLY = 70,000 Borealis
     uint256 public constant FARMING_POOL_REWARD_ALLOCATION = 59500 ether;
-    uint256 public constant COMMUNITY_FUND_POOL_ALLOCATION = 5500 ether;
-    uint256 public constant DEV_FUND_POOL_ALLOCATION = 5000 ether;
 
     uint256 public constant VESTING_DURATION = 365 days;
     uint256 public startTime;
     uint256 public endTime;
 
     uint256 public communityFundRewardRate;
+    uint256 public teamFundRewardRate; // have Fonzo/Rick double check
     uint256 public devFundRewardRate;
 
     address public communityFund;
+    address public teamFund; // have Fonzo/Rick double check
     address public devFund;
 
     uint256 public communityFundLastClaimed;
+    uint256 public teamFundLastClaimed; // have Fonzo/Rick double check
     uint256 public devFundLastClaimed;
 
     bool public rewardPoolDistributed = false;
+    bool public isAllocated = false; // have Fonzo/Rick double check
 
-    constructor(uint256 _startTime, address _communityFund, address _devFund) public ERC20("TSHARE", "TSHARE") {
-        _mint(msg.sender, 1 ether); // mint 1 TOMB Share for initial pools deployment
+    constructor(
+        uint256 _startTime,
+        address _communityFund,
+        address _devFund,
+        address _teamFund
+    ) public ERC20("Borealis", "Borealis") {
+        _mint(msg.sender, 1 ether); // mint 1 Borealis for initial pools deployment
 
         startTime = _startTime;
         endTime = startTime + VESTING_DURATION;
 
         communityFundLastClaimed = startTime;
+        teamFundLastClaimed = startTime;
         devFundLastClaimed = startTime;
 
         communityFundRewardRate = COMMUNITY_FUND_POOL_ALLOCATION.div(VESTING_DURATION);
@@ -69,6 +73,13 @@ contract TShare is ERC20Burnable, Operator {
         devFund = _devFund;
     }
 
+    // Fonzo/Rick double check
+    function setTeamFund(address _teamFund) external {
+        require(msg.sender == teamFund, "!team");
+        require(_teamFund != address(0), "zero");
+        teamFund = _teamFund;
+    }
+
     function unclaimedTreasuryFund() public view returns (uint256 _pending) {
         uint256 _now = block.timestamp;
         if (_now > endTime) _now = endTime;
@@ -83,10 +94,18 @@ contract TShare is ERC20Burnable, Operator {
         _pending = _now.sub(devFundLastClaimed).mul(devFundRewardRate);
     }
 
+    function unclaimedTeamFund() public view returns (uint256 _pending) {
+        uint256 _now = block.timestamp;
+        if (_now > endTime) _now = endTime;
+        if (teamFundLastClaimed >= _now) return 0;
+        _pending = _now.sub(teamFundLastClaimed).mul(teamFundRewardRate);
+    }
+
     /**
      * @dev Claim pending rewards to community and dev fund
      */
     function claimRewards() external {
+        require(isAllocated, "not allocated to funds yet");
         uint256 _pending = unclaimedTreasuryFund();
         if (_pending > 0 && communityFund != address(0)) {
             _mint(communityFund, _pending);
@@ -96,6 +115,11 @@ contract TShare is ERC20Burnable, Operator {
         if (_pending > 0 && devFund != address(0)) {
             _mint(devFund, _pending);
             devFundLastClaimed = block.timestamp;
+        }
+        _pending - unclaimedTeamFund();
+        if (_pending > 0 && teamFund != address(0)) {
+            _mint(teamFund, _pending);
+            teamFundLastClaimed = block.timestamp;
         }
     }
 
