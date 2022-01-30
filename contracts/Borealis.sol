@@ -23,19 +23,19 @@ contract Borealis is ERC20Burnable, Operator {
     uint256 public endTime;
 
     uint256 public communityFundRewardRate;
-    uint256 public teamFundRewardRate; // have Fonzo/Rick double check
+    uint256 public teamFundRewardRate;
     uint256 public devFundRewardRate;
 
     address public communityFund;
-    address public teamFund; // have Fonzo/Rick double check
+    address public teamFund;
     address public devFund;
 
     uint256 public communityFundLastClaimed;
-    uint256 public teamFundLastClaimed; // have Fonzo/Rick double check
+    uint256 public teamFundLastClaimed;
     uint256 public devFundLastClaimed;
 
     bool public rewardPoolDistributed = false;
-    bool public isAllocated = false; // have Fonzo/Rick double check
+    bool public isAllocated = false;
 
     constructor(
         uint256 _startTime,
@@ -58,8 +58,27 @@ contract Borealis is ERC20Burnable, Operator {
         require(_devFund != address(0), "Address cannot be 0");
         devFund = _devFund;
 
+        require(_teamFund != address(0), "Address cannot be 0");
+        teamFund = _teamFund;
+
         require(_communityFund != address(0), "Address cannot be 0");
         communityFund = _communityFund;
+    }
+
+    function setAllocations(
+        uint256 _communityAllocation,
+        uint256 _devAllocation,
+        uint256 _teamAllocation
+    ) external {
+        require(_communityAllocation <= 10000 ether, "community allocation too high");
+        require(_devAllocation <= 2100 ether, "dev allocation too high");
+        require(_teamAllocation <= 2100 ether, "team allocation too high");
+
+        isAllocated = true;
+
+        communityFundRewardRate = _communityAllocation.div(VESTING_DURATION);
+        teamFundRewardRate = _teamAllocation.div(VESTING_DURATION);
+        devFundRewardRate = _devAllocation.div(VESTING_DURATION);
     }
 
     function setTreasuryFund(address _communityFund) external {
@@ -73,7 +92,6 @@ contract Borealis is ERC20Burnable, Operator {
         devFund = _devFund;
     }
 
-    // Fonzo/Rick double check
     function setTeamFund(address _teamFund) external {
         require(msg.sender == teamFund, "!team");
         require(_teamFund != address(0), "zero");
