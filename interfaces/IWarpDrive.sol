@@ -9,7 +9,7 @@ interface IWarpDrive {
 
     function canWithdraw(address _warper) external view returns (bool);
 
-    function canClaimReward(address _waper) external view returns (bool);
+    function canClaimReward(address _warper) external view returns (bool);
 
     function epoch() external view returns (uint256);
 

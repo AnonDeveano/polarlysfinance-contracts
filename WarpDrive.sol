@@ -97,8 +97,8 @@ contract WarpDrive is ShareWrapper, ContractGuard {
         _;
     }
 
-    modifier masonExists() {
-        require(balanceOf(msg.sender) > 0, "Warp Drive: The mason does not exist");
+    modifier warperExists() {
+        require(balanceOf(msg.sender) > 0, "Warp Drive: The warper does not exist");
         _;
     }
 
@@ -124,7 +124,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
         IERC20 _share,
         ITreasury _treasury
     ) public notInitialized {
-        tomb = _nebula;
+        nebula = _nebula;
         share = _share;
         treasury = _treasury;
 
@@ -154,7 +154,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
     // =========== Snapshot getters
 
     function latestSnapshotIndex() public view returns (uint256) {
-        return masonryHistory.length.sub(1);
+        return warpdriveHistory.length.sub(1);
     }
 
     function getLatestSnapshot() internal view returns (WarpDriveSnapshot memory) {
@@ -173,7 +173,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
         return warpers[warper].epochTimerStart.add(withdrawLockupEpochs) <= treasury.epoch();
     }
 
-    function canClaimReward(address mason) external view returns (bool) {
+    function canClaimReward(address warper) external view returns (bool) {
         return warpers[warper].epochTimerStart.add(rewardLockupEpochs) <= treasury.epoch();
     }
 
@@ -197,7 +197,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
 
     function earned(address warper) public view returns (uint256) {
         uint256 latestRPS = getLatestSnapshot().rewardPerShare;
-        uint256 storedRPS = getLastSnapshotOf(mason).rewardPerShare;
+        uint256 storedRPS = getLastSnapshotOf(warper).rewardPerShare;
 
         return balanceOf(warper).mul(latestRPS.sub(storedRPS)).div(1e18).add(warpers[warper].rewardEarned);
     }
@@ -207,7 +207,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
     function stake(uint256 amount) public override onlyOneBlock updateReward(msg.sender) {
         require(amount > 0, "Warp Drive: Cannot stake 0");
         super.stake(amount);
-        masons[msg.sender].epochTimerStart = treasury.epoch(); // reset timer
+        warpers[msg.sender].epochTimerStart = treasury.epoch(); // reset timer
         emit Staked(msg.sender, amount);
     }
 

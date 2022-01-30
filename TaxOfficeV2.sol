@@ -172,11 +172,11 @@ contract TaxOfficeV2 is Operator {
         if (amtNebula.sub(resultAmtNebula) > 0) {
             IERC20(nebula).transfer(msg.sender, amtNebula.sub(resultAmtNebula));
         }
-        return (resultAmtTomb, resultAmtFtm, liquidity);
+        return (resultAmtNebula, resultAmtNear, liquidity);
     }
 
     function setTaxableNebulaOracle(address _NebOracle) external onlyOperator {
-        ITaxable(nebula).setTombOracle(_NebOracle);
+        ITaxable(nebula).setNebulaOracle(_NebOracle);
     }
 
     function transferTaxOffice(address _newTaxOffice) external onlyOperator {

@@ -13,7 +13,7 @@ Polarlys Finance
 */
 contract StarDust is ERC20Burnable, Operator {
     /**
-     * @notice Constructs the StarDust ERC-20 contract, TBond equivalent
+     * @notice Constructs the StarDust ERC-20 contract, StarDust equivalent
      */
     constructor() public ERC20("StarDust", "StarDust") {}
 

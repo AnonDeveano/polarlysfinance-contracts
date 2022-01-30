@@ -90,7 +90,7 @@ contract Treasury is ContractGuard {
     event Initialized(address indexed executor, uint256 at);
     event BurnedBonds(address indexed from, uint256 bondAmount);
     event RedeemedBonds(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
-    event BoughtBonds(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
+    event BoughstarDusts(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
     event TreasuryFunded(uint256 timestamp, uint256 seigniorage);
     event WarpDriveFunded(uint256 timestamp, uint256 seigniorage);
     event DaoFundFunded(uint256 timestamp, uint256 seigniorage);
@@ -187,14 +187,14 @@ contract Treasury is ContractGuard {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice > nebulaPriceCeiling) {
             uint256 _totalNebula = IERC20(nebula).balanceOf(address(this));
-            uint256 _rate = getBondPremiumRate();
+            uint256 _rate = gestarDustPremiumRate();
             if (_rate > 0) {
                 _redeemableBonds = _totalNebula.mul(1e18).div(_rate);
             }
         }
     }
 
-    function getBondDiscountRate() public view returns (uint256 _rate) {
+    function gestarDustDiscountRate() public view returns (uint256 _rate) {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice <= nebulaPriceOne) {
             if (discountPercent == 0) {
@@ -211,7 +211,7 @@ contract Treasury is ContractGuard {
         }
     }
 
-    function getBondPremiumRate() public view returns (uint256 _rate) {
+    function gestarDustPremiumRate() public view returns (uint256 _rate) {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice > nebulaPriceCeiling) {
             uint256 _nebulaPricePremiumThreshold = nebulaPriceOne.mul(premiumThreshold).div(100);
@@ -320,7 +320,7 @@ contract Treasury is ContractGuard {
         return true;
     }
 
-    function setBondDepletionFloorPercent(uint256 _bondDepletionFloorPercent) external onlyOperator {
+    function sestarDustDepletionFloorPercent(uint256 _bondDepletionFloorPercent) external onlyOperator {
         require(_bondDepletionFloorPercent >= 500 && _bondDepletionFloorPercent <= 10000, "out of range"); // [5%, 100%]
         bondDepletionFloorPercent = _bondDepletionFloorPercent;
     }
@@ -418,7 +418,7 @@ contract Treasury is ContractGuard {
 
         require(_nebulaAmount <= epochSupplyContractionLeft, "Treasury: not enough bond left to purchase");
 
-        uint256 _rate = getBondDiscountRate();
+        uint256 _rate = gestarDustDiscountRate();
         require(_rate > 0, "Treasury: invalid bond rate");
 
         uint256 _bondAmount = _nebulaAmount.mul(_rate).div(1e18);
@@ -432,7 +432,7 @@ contract Treasury is ContractGuard {
         epochSupplyContractionLeft = epochSupplyContractionLeft.sub(_nebulaAmount);
         _updateNebulaPrice();
 
-        emit BoughtBonds(msg.sender, _nebulaAmount, _bondAmount);
+        emit BoughstarDusts(msg.sender, _nebulaAmount, _bondAmount);
     }
 
     function redeemBonds(uint256 _bondAmount, uint256 targetPrice) external onlyOneBlock checkCondition checkOperator {
@@ -445,7 +445,7 @@ contract Treasury is ContractGuard {
             "Treasury: nebulaPrice not eligible for bond purchase"
         );
 
-        uint256 _rate = getBondPremiumRate();
+        uint256 _rate = gestarDustPremiumRate();
         require(_rate > 0, "Treasury: invalid bond rate");
 
         uint256 _nebulaAmount = _bondAmount.mul(_rate).div(1e18);
@@ -490,7 +490,7 @@ contract Treasury is ContractGuard {
 
         IERC20(nebula).safeApprove(warpdrive, 0);
         IERC20(nebula).safeApprove(warpdrive, _amount);
-        IMasonry(warpdrive).allocateSeigniorage(_amount);
+        IWarpDrive(warpdrive).allocateSeigniorage(_amount);
         emit WarpDriveFunded(now, _amount);
     }
 
@@ -518,7 +518,7 @@ contract Treasury is ContractGuard {
                 uint256 _percentage = previousEpochNebulaPrice.sub(nebulaPriceOne);
                 uint256 _savedForBond;
                 uint256 _savedForWarpDrive;
-                uint256 _mse = _calculateMaxSupplyExpansionPercent(tombSupply).mul(1e14);
+                uint256 _mse = _calculateMaxSupplyExpansionPercent(nebulaSupply).mul(1e14);
                 if (_percentage > _mse) {
                     _percentage = _mse;
                 }

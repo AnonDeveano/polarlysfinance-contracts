@@ -17,7 +17,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "tombAmount",
+						"name": "nebulaAmount",
 						"type": "uint256"
 					},
 					{
@@ -27,7 +27,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "BoughtBonds",
+				"name": "BoughstarDusts",
 				"type": "event"
 			},
 			{
@@ -122,7 +122,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "MasonryFunded",
+				"name": "WarpDriveFunded",
 				"type": "event"
 			},
 			{
@@ -137,7 +137,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "tombAmount",
+						"name": "nebulaAmount",
 						"type": "uint256"
 					},
 					{
@@ -232,7 +232,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_tombAmount",
+						"name": "_nebulaAmount",
 						"type": "uint256"
 					},
 					{
@@ -339,7 +339,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "getBondDiscountRate",
+				"name": "gestarDustDiscountRate",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -352,7 +352,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "getBondPremiumRate",
+				"name": "gestarDustPremiumRate",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -365,11 +365,11 @@
 			},
 			{
 				"inputs": [],
-				"name": "getBurnableTombLeft",
+				"name": "getBurnableNebulaLeft",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "_burnableTombLeft",
+						"name": "_burnableNebulaLeft",
 						"type": "uint256"
 					}
 				],
@@ -404,11 +404,11 @@
 			},
 			{
 				"inputs": [],
-				"name": "getTombPrice",
+				"name": "getNebulaPrice",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "tombPrice",
+						"name": "nebulaPrice",
 						"type": "uint256"
 					}
 				],
@@ -417,11 +417,11 @@
 			},
 			{
 				"inputs": [],
-				"name": "getTombUpdatedPrice",
+				"name": "getNebulaUpdatedPrice",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "_tombPrice",
+						"name": "_nebulaPrice",
 						"type": "uint256"
 					}
 				],
@@ -455,27 +455,27 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_tomb",
+						"name": "_nebula",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tbond",
+						"name": "_stardust",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tshare",
+						"name": "_borealis",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_tombOracle",
+						"name": "_nebulaOracle",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "_masonry",
+						"name": "_warpdrive",
 						"type": "address"
 					},
 					{
@@ -517,7 +517,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "masonry",
+				"name": "warpdrive",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -536,7 +536,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "masonryAllocateSeigniorage",
+				"name": "warpdriveAllocateSeigniorage",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -559,7 +559,7 @@
 						"type": "address"
 					}
 				],
-				"name": "masonryGovernanceRecoverUnsupported",
+				"name": "warpdriveGovernanceRecoverUnsupported",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -577,7 +577,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "masonrySetLockUp",
+				"name": "warpdriveSetLockUp",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -590,7 +590,7 @@
 						"type": "address"
 					}
 				],
-				"name": "masonrySetOperator",
+				"name": "warpdriveSetOperator",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -746,7 +746,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "previousEpochTombPrice",
+				"name": "previousEpochNebulaPrice",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -809,7 +809,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "setBondDepletionFloorPercent",
+				"name": "sestarDustDepletionFloorPercent",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -877,11 +877,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_masonry",
+						"name": "_warpdrive",
 						"type": "address"
 					}
 				],
-				"name": "setMasonry",
+				"name": "setWarpDrive",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1055,11 +1055,11 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_tombOracle",
+						"name": "_nebulaOracle",
 						"type": "address"
 					}
 				],
-				"name": "setTombOracle",
+				"name": "setNebulaOracle",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1068,11 +1068,11 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_tombPriceCeiling",
+						"name": "_nebulaPriceCeiling",
 						"type": "uint256"
 					}
 				],
-				"name": "setTombPriceCeiling",
+				"name": "setNebulaPriceCeiling",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1111,7 +1111,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tbond",
+				"name": "stardust",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -1124,7 +1124,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tomb",
+				"name": "nebula",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -1137,7 +1137,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tombOracle",
+				"name": "nebulaOracle",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -1150,7 +1150,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tombPriceCeiling",
+				"name": "nebulaPriceCeiling",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -1163,7 +1163,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tombPriceOne",
+				"name": "nebulaPriceOne",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -1176,7 +1176,7 @@
 			},
 			{
 				"inputs": [],
-				"name": "tshare",
+				"name": "borealis",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -1197,7 +1197,7 @@
 		"userdoc": {
 			"kind": "user",
 			"methods": {},
-			"notice": "Monetary policy logic to adjust supplies of TOMB assets",
+			"notice": "Monetary policy logic to adjust supplies of NEBULA assets",
 			"version": 1
 		}
 	},
@@ -1296,7 +1296,7 @@
 				"dweb:/ipfs/QmQt7UyLF4NQkPo3hxv4qRN21cCSLmVqZncLadXbakZSKD"
 			]
 		},
-		"contracts/interfaces/IMasonry.sol": {
+		"contracts/interfaces/IWarpDrive.sol": {
 			"keccak256": "0xd5814491890c0f1e890a315dc9454d39240bda1dac6df7a5b91715ad833b2838",
 			"license": "MIT",
 			"urls": [
