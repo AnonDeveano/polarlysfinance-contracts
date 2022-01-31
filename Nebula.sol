@@ -19,9 +19,9 @@ contract Nebula is ERC20Burnable, Operator {
     using SafeMath for uint256;
 
     // Initial distribution for the first 24h genesis pools
-    uint256 public constant INITIAL_LAUNCH_DISTRIBUTION = 40000 ether; // have Rick/Fonzo check this
+    uint256 public constant INITIAL_LAUNCH_DISTRIBUTION = 40000 ether; 
     // Distribution for airdrops wallet
-    uint256 public constant INITIAL_AIRDROP_WALLET_DISTRIBUTION = 20000 ether; // have Rick/Fonzo check this
+    uint256 public constant INITIAL_AIRDROP_WALLET_DISTRIBUTION = 20000 ether; 
 
     // Have the rewards been distributed to the pools
     bool public rewardPoolDistributed = false;
@@ -48,11 +48,6 @@ contract Nebula is ERC20Burnable, Operator {
         return balanceAfter > balanceBefore;
     }
 
-    function burn(uint256 amount) public override {
-        super.burn(amount);
-    }
-
-    // Fonzo/Rick Check
     function burn(uint256 amount) public override {
         super.burn(amount);
     }
