@@ -240,7 +240,7 @@ contract Treasury is ContractGuard {
         uint256 _startTime
     ) public notInitialized {
         nebula = _nebula;
-        stardust = _stardust
+        stardust = _stardust;
         borealis = _borealis;
         nebulaOracle = _nebulaOracle;
         warpdrive = _warpdrive;
@@ -251,7 +251,7 @@ contract Treasury is ContractGuard {
 
         // ANALYZE THIS // 
         // Dynamic max expansion percent
-        supplyTiers = [0 ether, 500000 ether, 1000000 ether, 1500000 ether, 2000000 ether, 5000000 ether, 10000000 ether, 20000000 ether, 50000000 ether];
+        supplyTiers = [0 ether, 2000000 ether, 4000000 ether, 6000000 ether, 8000000 ether, 20000000 ether, 40000000 ether, 80000000 ether, 2000000000 ether];
         maxExpansionTiers = [450, 400, 350, 300, 250, 200, 150, 125, 100];
 
         maxSupplyExpansionPercent = 400; // Upto 4.0% supply for expansion
