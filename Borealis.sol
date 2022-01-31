@@ -52,9 +52,6 @@ contract Borealis is ERC20Burnable, Operator {
         teamFundLastClaimed = startTime;
         devFundLastClaimed = startTime;
 
-        communityFundRewardRate = COMMUNITY_FUND_POOL_ALLOCATION.div(VESTING_DURATION);
-        devFundRewardRate = DEV_FUND_POOL_ALLOCATION.div(VESTING_DURATION);
-
         require(_devFund != address(0), "Address cannot be 0");
         devFund = _devFund;
 
