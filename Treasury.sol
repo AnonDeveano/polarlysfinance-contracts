@@ -90,7 +90,7 @@ contract Treasury is ContractGuard {
     event Initialized(address indexed executor, uint256 at);
     event BurnedBonds(address indexed from, uint256 bondAmount);
     event RedeemedBonds(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
-    event BoughstarDusts(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
+    event BoughtstarDusts(address indexed from, uint256 nebulaAmount, uint256 bondAmount);
     event TreasuryFunded(uint256 timestamp, uint256 seigniorage);
     event WarpDriveFunded(uint256 timestamp, uint256 seigniorage);
     event DaoFundFunded(uint256 timestamp, uint256 seigniorage);
@@ -187,14 +187,14 @@ contract Treasury is ContractGuard {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice > nebulaPriceCeiling) {
             uint256 _totalNebula = IERC20(nebula).balanceOf(address(this));
-            uint256 _rate = gestarDustPremiumRate();
+            uint256 _rate = getstarDustPremiumRate();
             if (_rate > 0) {
                 _redeemableBonds = _totalNebula.mul(1e18).div(_rate);
             }
         }
     }
 
-    function gestarDustDiscountRate() public view returns (uint256 _rate) {
+    function getstarDustDiscountRate() public view returns (uint256 _rate) {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice <= nebulaPriceOne) {
             if (discountPercent == 0) {
@@ -211,7 +211,7 @@ contract Treasury is ContractGuard {
         }
     }
 
-    function gestarDustPremiumRate() public view returns (uint256 _rate) {
+    function getstarDustPremiumRate() public view returns (uint256 _rate) {
         uint256 _nebulaPrice = getNebulaPrice();
         if (_nebulaPrice > nebulaPriceCeiling) {
             uint256 _nebulaPricePremiumThreshold = nebulaPriceOne.mul(premiumThreshold).div(100);
@@ -418,7 +418,7 @@ contract Treasury is ContractGuard {
 
         require(_nebulaAmount <= epochSupplyContractionLeft, "Treasury: not enough bond left to purchase");
 
-        uint256 _rate = gestarDustDiscountRate();
+        uint256 _rate = getstarDustDiscountRate();
         require(_rate > 0, "Treasury: invalid bond rate");
 
         uint256 _bondAmount = _nebulaAmount.mul(_rate).div(1e18);
@@ -432,7 +432,7 @@ contract Treasury is ContractGuard {
         epochSupplyContractionLeft = epochSupplyContractionLeft.sub(_nebulaAmount);
         _updateNebulaPrice();
 
-        emit BoughstarDusts(msg.sender, _nebulaAmount, _bondAmount);
+        emit BoughtstarDusts(msg.sender, _nebulaAmount, _bondAmount);
     }
 
     function redeemBonds(uint256 _bondAmount, uint256 targetPrice) external onlyOneBlock checkCondition checkOperator {
@@ -445,7 +445,7 @@ contract Treasury is ContractGuard {
             "Treasury: nebulaPrice not eligible for bond purchase"
         );
 
-        uint256 _rate = gestarDustPremiumRate();
+        uint256 _rate = getstarDustPremiumRate();
         require(_rate > 0, "Treasury: invalid bond rate");
 
         uint256 _nebulaAmount = _bondAmount.mul(_rate).div(1e18);

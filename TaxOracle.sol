@@ -42,7 +42,7 @@ contract TaxOracle is Ownable {
 	    return nebula.balanceOf(pair);
     }
 
-    function getAuroraBalance() external view returns (uint256) {
+    function getNearBalance() external view returns (uint256) {
 	    return near.balanceOf(pair);
     }
 
