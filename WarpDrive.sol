@@ -158,7 +158,7 @@ contract WarpDrive is ShareWrapper, ContractGuard {
     }
 
     function getLatestSnapshot() internal view returns (WarpDriveSnapshot memory) {
-        return warpdriveHistory[latestSnapshotIndex()];
+        return warpdriveHistory.latestSnapshotIndex()];
     }
 
     function getLastSnapshotIndexOf(address warper) public view returns (uint256) {
