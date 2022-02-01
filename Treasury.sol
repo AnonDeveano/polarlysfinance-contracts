@@ -266,7 +266,7 @@ contract Treasury is ContractGuard {
 
         // Check bootstrapEpochs
         // First 28 epochs with 4.5% expansion
-        bootstrapEpochs = 28;
+        bootstrapEpochs = 0;
         bootstrapSupplyExpansionPercent = 450;
 
         // set seigniorageSaved to it's balance
@@ -320,7 +320,7 @@ contract Treasury is ContractGuard {
         return true;
     }
 
-    function sestarDustDepletionFloorPercent(uint256 _bondDepletionFloorPercent) external onlyOperator {
+    function setstarDustDepletionFloorPercent(uint256 _bondDepletionFloorPercent) external onlyOperator {
         require(_bondDepletionFloorPercent >= 500 && _bondDepletionFloorPercent <= 10000, "out of range"); // [5%, 100%]
         bondDepletionFloorPercent = _bondDepletionFloorPercent;
     }

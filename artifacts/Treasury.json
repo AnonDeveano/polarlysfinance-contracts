@@ -94,7 +94,7 @@
 				"redeemBonds(uint256,uint256)": "infinite",
 				"seigniorageExpansionFloorPercent()": "1133",
 				"seigniorageSaved()": "1088",
-				"sestarDustDepletionFloorPercent(uint256)": "infinite",
+				"setstarDustDepletionFloorPercent(uint256)": "infinite",
 				"setBootstrap(uint256,uint256)": "infinite",
 				"setDiscountPercent(uint256)": "infinite",
 				"setExtraFunds(address,uint256,address,uint256)": "infinite",
@@ -172,7 +172,7 @@
 			"redeemBonds(uint256,uint256)": "118ebbf9",
 			"seigniorageExpansionFloorPercent()": "22f832cd",
 			"seigniorageSaved()": "5a0fc79c",
-			"sestarDustDepletionFloorPercent(uint256)": "8c664db6",
+			"setstarDustDepletionFloorPercent(uint256)": "8c664db6",
 			"setBootstrap(uint256,uint256)": "91bbfed5",
 			"setDiscountPercent(uint256)": "154ec2db",
 			"setExtraFunds(address,uint256,address,uint256)": "bcc81f19",
@@ -1005,7 +1005,7 @@
 					"type": "uint256"
 				}
 			],
-			"name": "sestarDustDepletionFloorPercent",
+			"name": "setstarDustDepletionFloorPercent",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"

@@ -809,7 +809,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "sestarDustDepletionFloorPercent",
+				"name": "setstarDustDepletionFloorPercent",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
