@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 // Note that this pool has no minter key of Borealis (rewards).
-// Instead, the governance will call Borelis distributeReward method and send reward to this pool at the beginning.
+// Instead, the governance will call Borealis distributeReward method and send reward to this pool at the beginning.
 contract BorealisRewardPool {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
