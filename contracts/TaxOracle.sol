@@ -35,7 +35,7 @@ contract TaxOracle is Ownable {
         require(_token == address(nebula), "token needs to be nebula");
         uint256 nebulaBalance = nebula.balanceOf(pair);
         uint256 nearBalance = near.balanceOf(pair);
-        rreturn uint144(nebulaBalance.mul(_amountIn).div(nearBalance));
+        return uint144(nebulaBalance.mul(_amountIn).div(nearBalance));
     }
 
     function getNebulaBalance() external view returns (uint256) {

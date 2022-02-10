@@ -1,6 +1,6 @@
 pragma solidity ^0.6.0;
 
-library Safe112 {
+library SafeMath {
     function add(uint112 a, uint112 b) internal pure returns (uint256) {
         uint256 c = a + b;
         require(c >= a, "Safe112: addition overflow");
