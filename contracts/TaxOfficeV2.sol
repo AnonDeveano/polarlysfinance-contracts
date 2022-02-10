@@ -2,7 +2,7 @@
 
 pragma solidity 0.6.12;
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./owner/Operator.sol";
 import "./interfaces/ITaxable.sol";
 import "./interfaces/IUniswapV2Router.sol";
@@ -85,7 +85,7 @@ contract TaxOfficeV2 is Operator {
         }
     }
 
-    function taxRate() external view returns (uint256) {
+    function taxRate() external returns (uint256) {
         return ITaxable(nebula).taxRate();
     }
 
@@ -172,7 +172,7 @@ contract TaxOfficeV2 is Operator {
         if (amtNebula.sub(resultAmtNebula) > 0) {
             IERC20(nebula).transfer(msg.sender, amtNebula.sub(resultAmtNebula));
         }
-        return (resultAmtNebula, resultAmtNear, liquidity);
+        return (resultAmtNebula, resultAmtEth, liquidity);
     }
 
     function setTaxableNebulaOracle(address _NebOracle) external onlyOperator {

@@ -1233,7 +1233,7 @@
 				"dweb:/ipfs/QmVQUReDW9f4zGqhizwHnyU8EntMs95tbASdqkGncnikba"
 			]
 		},
-		"@openzeppelin/contracts/utils/math/Math.sol": {
+		"@openzeppelin/contracts/math/Math.sol": {
 			"keccak256": "0x6c234834003dfb86e2c23d12dfdde7cc01e78013d71b52162cb308b4873562cb",
 			"license": "MIT",
 			"urls": [
@@ -1241,7 +1241,7 @@
 				"dweb:/ipfs/QmUErheHopnbBUSLDQAtWsmw6HsEvqTNp1QiBEuSJhmhHn"
 			]
 		},
-		"@openzeppelin/contracts/utils/math/SafeMath.sol": {
+		"@openzeppelin/contracts/math/SafeMath.sol": {
 			"keccak256": "0x9a9cf02622cd7a64261b10534fc3260449da25c98c9e96d1b4ae8110a20e5806",
 			"license": "MIT",
 			"urls": [
@@ -1257,7 +1257,7 @@
 				"dweb:/ipfs/QmfAZFDuG62vxmAN9DnXApv7e7PMzPqi4RkqqZHLMSQiY5"
 			]
 		},
-		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+		"@openzeppelin/contracts/token/ERC20/SafeERC20.sol": {
 			"keccak256": "0xf3b30f8a49631420635a8c35daacfcaa338012755f18a76fdd118730256f9a27",
 			"license": "MIT",
 			"urls": [
@@ -1273,7 +1273,7 @@
 				"dweb:/ipfs/QmRRMC4uj7eAcLW7chynA3sNEYULMFazdLwQHKHQPyzAbA"
 			]
 		},
-		"@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+		"@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
 			"keccak256": "0x7ff0067f2d7df4187eaa1cb4800949b929602c9d9cb20fcaee6922a7613ef2fb",
 			"license": "MIT",
 			"urls": [

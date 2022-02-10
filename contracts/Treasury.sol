@@ -2,10 +2,11 @@
 
 pragma solidity 0.6.12;
 
-import "@openzeppelin/contracts/utils/math/Math.sol";
+import "@openzeppelin/contracts/math/Math.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./lib/Babylonian.sol";
 import "./owner/Operator.sol";
@@ -95,6 +96,7 @@ contract Treasury is ContractGuard {
     event WarpDriveFunded(uint256 timestamp, uint256 seigniorage);
     event DaoFundFunded(uint256 timestamp, uint256 seigniorage);
     event DevFundFunded(uint256 timestamp, uint256 seigniorage);
+    event TeamFundFunded(uint256 timestamp, uint256 seigniorage);
 
     /* =================== Modifier =================== */
 
