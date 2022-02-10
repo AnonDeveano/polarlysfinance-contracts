@@ -1233,7 +1233,7 @@
 				"dweb:/ipfs/QmVQUReDW9f4zGqhizwHnyU8EntMs95tbASdqkGncnikba"
 			]
 		},
-		"@openzeppelin/contracts/math/Math.sol": {
+		"@openzeppelin/contracts/utils/math/Math.sol": {
 			"keccak256": "0x6c234834003dfb86e2c23d12dfdde7cc01e78013d71b52162cb308b4873562cb",
 			"license": "MIT",
 			"urls": [
