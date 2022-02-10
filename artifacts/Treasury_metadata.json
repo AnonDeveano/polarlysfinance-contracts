@@ -1217,7 +1217,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"@openzeppelin/contracts/GSN/Context.sol": {
+		"@openzeppelin/contracts/utils/Context.sol": {
 			"keccak256": "0xdb26cbf4d028490f49831a7865c2fe1b28db44b535ca8d343785a3b768aae183",
 			"license": "MIT",
 			"urls": [
