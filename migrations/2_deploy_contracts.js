@@ -1,8 +1,8 @@
-const Storage = artifacts.require("Storage");
-const Borealis = artifacts.require("Borealis");
-const Distributor = artifacts.require("Distributor");
-const DummyToken = artifacts.require("DummyToken");
-const Nebula = artifacts.require("Nebula");
+var Storage = artifacts.require("Storage");
+var Borealis = artifacts.require("Borealis");
+var Distributor = artifacts.require("Distributor");
+var DummyToken = artifacts.require("DummyToken");
+var Nebula = artifacts.require("Nebula");
 var Oracle = artifacts.require("Oracle");
 var SimpleERCFund = artifacts.require("SimpleERCFund");
 var StarDust = artifacts.require("StarDust");
@@ -13,20 +13,26 @@ var Timelock = artifacts.require("Timelock");
 var Treasury = artifacts.require("Treasury");
 var WarpDrive = artifacts.require("WarpDrive");
 var BorealisRewardPool = artifacts.require("BorealisRewardPool");
-var WarpDrive = artifacts.require("NebulaGenesisRewardPool");
-var WarpDrive = artifacts.require("distribution/NebulaRewardPool");
+var NebulaGenesisRewardPool = artifacts.require("NebulaGenesisRewardPool");
+var NebulaRewardPool = artifacts.require("distribution/NebulaRewardPool");
 
 module.exports = function (deployer) {
     // Deployer is the Truffle wrapper for deploying
     // contracts to the network
 
+    uint256 _startTime = //;
+    const accounts = await web3.eth.getAccounts();
+    const _devFund = accounts[0];
+    const _communityFund = accounts[1];
+    const _teamFund = accounts[2];
+
     // Deploy the contract to the network
     deployer.deploy(Storage);
-    deployer.deploy(Borealis);
+    deployer.deploy(Borealis, _communityFund, _devFund, _teamFund);
     deployer.deploy(Distributor);
     deployer.deploy(DummyToken);
     deployer.deploy(Nebula);
-    deployer.deploy(Oracle);
+    deployer.deploy(Oracle); //
     deployer.deploy(SimpleERCFund);
     deployer.deploy(StarDust);
     deployer.deploy(TaxOffice);
