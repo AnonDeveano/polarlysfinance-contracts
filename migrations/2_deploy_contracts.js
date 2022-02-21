@@ -20,20 +20,21 @@ module.exports = function (deployer) {
     // Deployer is the Truffle wrapper for deploying
     // contracts to the network
 
-    uint256 _startTime = //;
-    const accounts = await web3.eth.getAccounts();
-    const _devFund = accounts[0];
-    const _communityFund = accounts[1];
-    const _teamFund = accounts[2];
+    let time = Date.now();
+    const _devFund = "0x7299192CD862c9c5345cC47a2Ef24807436009b0";
+    const _communityFund = "0x86A247546cA84735542bF61BEE722b0250bDFfc9";
+    const _teamFund = "0x5A7a3609474790cb6399b5F0422967e995037A1d";
+
+    let _distributors = [];
 
     // Deploy the contract to the network
     deployer.deploy(Storage);
-    deployer.deploy(Borealis, _communityFund, _devFund, _teamFund);
-    deployer.deploy(Distributor);
+    deployer.deploy(Borealis, time, _communityFund, _devFund, _teamFund);
+    deployer.deploy(Distributor, _distributors);
     deployer.deploy(DummyToken);
     deployer.deploy(Nebula);
-    deployer.deploy(Oracle); //
-    deployer.deploy(SimpleERCFund);
+    deployer.deploy(Oracle);
+    deployer.deploy(SimpleERCFund); //
     deployer.deploy(StarDust);
     deployer.deploy(TaxOffice);
     deployer.deploy(TaxOfficeV2);
