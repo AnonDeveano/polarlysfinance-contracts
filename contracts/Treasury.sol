@@ -83,6 +83,7 @@ contract Treasury is ContractGuard {
 
     address public devFund;
     uint256 public devFundSharedPercent;
+    
     address public teamFund;
     uint256 public teamFundSharedPercent;
 
