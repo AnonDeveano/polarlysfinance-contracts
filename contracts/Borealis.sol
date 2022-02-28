@@ -15,8 +15,8 @@ Polarlys Finance
 contract Borealis is ERC20Burnable, Operator {
     using SafeMath for uint256;
 
-    // TOTAL MAX SUPPLY = 70,000 Borealis
-    uint256 public constant FARMING_POOL_REWARD_ALLOCATION = 59500 ether;
+    // TOTAL MAX SUPPLY = 50,000 Borealis
+    uint256 public constant FARMING_POOL_REWARD_ALLOCATION = 50000 ether;
 
     uint256 public constant VESTING_DURATION = 365 days;
     uint256 public startTime;
