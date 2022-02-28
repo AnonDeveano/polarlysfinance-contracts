@@ -24,22 +24,22 @@ module.exports = function (deployer) {
     let time = Date.now();
     // 6 hrs
     let _period = 3600 * 6;
-    // 5 days test delay just for deployment
-    let delay = 86400 * 5;
 
     const _devFund = "0x7299192CD862c9c5345cC47a2Ef24807436009b0";
     const _communityFund = "0x86A247546cA84735542bF61BEE722b0250bDFfc9";
     const _teamFund = "0x5A7a3609474790cb6399b5F0422967e995037A1d";
-    const admin_ = "0x7299192CD862c9c5345cC47a2Ef24807436009b0";
 
-    // define these explicitly as required for TaxOfficeV2
-    const _pair = "";
-    const _base = "";
-    const _router = "";
+
+    // Used for 'gatekeeper tax' previously, has been deprecated
+    // after it was exploited
+    const _zeroaddy = "0x0000000000000000000000000000000000000000";
+    const _pair = _zeroaddy;
+    const _base = _zeroaddy;
+    const _router = _zeroaddy;
 
     // nebula testnet address
     const _nebula = "";
-    // boralis testnet address
+    // borealis testnet address
     const _borealis = "";
     // required for contracts under distributions/
     const poolStartTime = "";
@@ -54,13 +54,8 @@ module.exports = function (deployer) {
     deployer.deploy(Nebula);
     deployer.deploy(SimpleERCFund);
     deployer.deploy(StarDust);
-    // requires Nebula address
-    deployer.deploy(TaxOffice);
-    // requires Nebula address, base, and router. WHAT IS BASE AND ROUTER explicitly?
-    deployer.deploy(TaxOfficeV2);
-    // requires Nebula, near, and pair in constructor but contains functions to set later
-    deployer.deploy(TaxOracle);
-    deployer.deploy(Timelock, admin_, delay);
+    deployer.deploy(TaxOfficeV2, _zeroaddy, _base, _router);
+    deployer.deploy(TaxOracle, _zeroaddy, _zeroaddy, _zeroaddy);
     // Does this need to be deployed with params?
     deployer.deploy(Treasury);
     deployer.deploy(WarpDrive);
