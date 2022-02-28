@@ -4,6 +4,7 @@
 .env
 node_modules/
 
+migrations/
 build/
 typechain/
 .DS_Store
@@ -16,3 +17,5 @@ truffle-config.js
 *.log
 !deployments/*.log
 env.json
+package.json
+migrations/2_deploy_contracts.js
