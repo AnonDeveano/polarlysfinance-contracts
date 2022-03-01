@@ -254,10 +254,10 @@ contract Treasury is ContractGuard {
 
         // ANALYZE THIS // 
         // Dynamic max expansion percent
-        supplyTiers = [0 ether, 2000000 ether, 4000000 ether, 6000000 ether, 8000000 ether, 20000000 ether, 40000000 ether, 80000000 ether, 2000000000 ether];
+        supplyTiers = [0 ether, 206000 ether, 386000 ether, 530000 ether, 1300000 ether, 5000000 ether, 10000000ether];
         maxExpansionTiers = [450, 400, 350, 300, 250, 200, 150, 125, 100];
 
-        maxSupplyExpansionPercent = 400; // Upto 4.0% supply for expansion
+        maxSupplyExpansionPercent = 600; // Upto 4.0% supply for expansion
 
         bondDepletionFloorPercent = 10000; // 100% of Bond supply for depletion floor
         seigniorageExpansionFloorPercent = 3500; // At least 35% of expansion reserved for warpdrive
@@ -269,8 +269,8 @@ contract Treasury is ContractGuard {
 
         // Check bootstrapEpochs
         // First 28 epochs with 4.5% expansion
-        bootstrapEpochs = 0;
-        bootstrapSupplyExpansionPercent = 450;
+        bootstrapEpochs = 14;
+        bootstrapSupplyExpansionPercent = 600;
 
         // set seigniorageSaved to it's balance
         seigniorageSaved = IERC20(nebula).balanceOf(address(this));
@@ -354,9 +354,9 @@ contract Treasury is ContractGuard {
         uint256 _teamFundSharedPercent
     ) external onlyOperator {
         require(_daoFund != address(0), "zero");
-        require(_daoFundSharedPercent <= 3000, "out of range"); // <= 30%
+        require(_daoFundSharedPercent <= 2000, "out of range"); // <= 20%
         require(_devFund != address(0), "zero");
-        require(_devFundSharedPercent <= 500, "out of range"); // <= 5%
+        require(_devFundSharedPercent <= 750, "out of range"); // <= 7.5%
         require(_teamFund != address(0), "zero");
         require(_teamFundSharedPercent <= 500, "out of range");  // <= 5%
         daoFund = _daoFund;
