@@ -255,7 +255,7 @@ contract Treasury is ContractGuard {
         // ANALYZE THIS // 
         // Dynamic max expansion percent
         supplyTiers = [0 ether, 206000 ether, 386000 ether, 530000 ether, 1300000 ether, 5000000 ether, 10000000ether];
-        maxExpansionTiers = [450, 400, 350, 300, 250, 200, 150, 125, 100];
+        maxExpansionTiers = [600, 500, 450, 400, 200, 100, 50];
 
         maxSupplyExpansionPercent = 600; // Upto 4.0% supply for expansion
 
