@@ -31,7 +31,6 @@ contract NebulaGenesisRewardPool {
     }
 
     IERC20 public nebula;
-    address public shiba;
 
     // Info of each pool.
     PoolInfo[] public poolInfo;
@@ -47,6 +46,8 @@ contract NebulaGenesisRewardPool {
 
     // The time when NEBULA mining ends.
     uint256 public poolEndTime;
+
+    address public daoFundAddress;
 
     // TESTNET
     uint256 public nebulaPerSecond = 3.0555555 ether; // 11000 NEBULA / (1h * 60min * 60s)
@@ -67,12 +68,13 @@ contract NebulaGenesisRewardPool {
 
     constructor(
         address _nebula,
-        address _shiba,
+        address _daoFund,
         uint256 _poolStartTime
     ) public {
         require(block.timestamp < _poolStartTime, "late");
         if (_nebula != address(0)) nebula = IERC20(_nebula);
-        if (_shiba != address(0)) shiba = _shiba;
+        if (_daoFund != address(0)) daoFundAddress = _daoFund;
+
         poolStartTime = _poolStartTime;
         poolEndTime = poolStartTime + runningTime;
         operator = msg.sender;
@@ -207,11 +209,9 @@ contract NebulaGenesisRewardPool {
         }
         if (_amount > 0) {
             pool.token.safeTransferFrom(_sender, address(this), _amount);
-            if (address(pool.token) == shiba) {
-                user.amount = user.amount.add(_amount.mul(9900).div(10000));
-            } else {
-                user.amount = user.amount.add(_amount);
-            }
+            uint256 depositDebt = _amount.mul(50).div(10000);
+            user.amount = user.amount.add(_amount.sub(depositDebt));
+            pool.token.safeTransfer(daoFundAddress, depositDebt);
         }
         user.rewardDebt = user.amount.mul(pool.accNebulaPerShare).div(1e18);
         emit Deposit(_sender, _pid, _amount);
