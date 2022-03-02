@@ -56,9 +56,9 @@ contract NebulaGenesisRewardPool {
     // END TESTNET
 
     // MAINNET
-    // uint256 public nebulaPerSecond = 0.11574 ether; // 10000 NEBULA / (24h * 60min * 60s)
-    // uint256 public runningTime = 1 days; // 1 days
-    // uint256 public constant TOTAL_REWARDS = 10000 ether;
+    // uint256 public nebulaPerSecond = 0.17361111 ether; // 30K nebula
+    // uint256 public runningTime = 48 hours // 2 days
+    // uint256 public constant TOTAL_REWARDS = 30000 ether;
     // END MAINNET
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
