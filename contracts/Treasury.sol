@@ -304,7 +304,7 @@ contract Treasury is ContractGuard {
 
     function setSupplyTiersEntry(uint8 _index, uint256 _value) external onlyOperator returns (bool) {
         require(_index >= 0, "Index has to be higher than 0");
-        require(_index < 9, "Index has to be lower than count of tiers");
+        require(_index < 7, "Index has to be lower than count of tiers");
         if (_index > 0) {
             require(_value > supplyTiers[_index - 1]);
         }
@@ -317,7 +317,7 @@ contract Treasury is ContractGuard {
 
     function setMaxExpansionTiersEntry(uint8 _index, uint256 _value) external onlyOperator returns (bool) {
         require(_index >= 0, "Index has to be higher than 0");
-        require(_index < 9, "Index has to be lower than count of tiers");
+        require(_index < 7, "Index has to be lower than count of tiers");
         require(_value >= 10 && _value <= 1000, "_value: out of range"); // [0.1%, 10%]
         maxExpansionTiers[_index] = _value;
         return true;
