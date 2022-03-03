@@ -49,6 +49,17 @@ contract Nebula is ERC20Burnable, Operator {
         return balanceAfter > balanceBefore;
     }
 
+    function setNebulaOracle(address _nebulaOracle) external onlyOperatorOrTaxOffice {
+        require(_nebulaOracle != address(0), "oracle address cannot be 0 address");
+        nebulaOracle = _nebulaOracle;
+    }
+
+    function setTaxOffice(address _taxOffice) external onlyOperatorOrTaxOffice {
+        require(_taxOffice != address(0), "tax office address cannot be 0 address");
+        emit TaxOfficeTransferred(taxOffice, _taxOffice);
+        taxOffice = _taxOffice;
+    }
+
     function burn(uint256 amount) public override {
         super.burn(amount);
     }
@@ -71,5 +82,10 @@ contract Nebula is ERC20Burnable, Operator {
         address _to
     ) external onlyOperator {
         _token.transfer(_to, _amount);
+    }
+
+    modifier onlyOperatorOrTaxOffice() {
+        require(isOperator() || taxOffice == msg.sender, "Caller is not the operator or the tax office");
+        _;
     }
 }
