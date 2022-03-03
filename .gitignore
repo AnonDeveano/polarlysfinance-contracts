@@ -3,8 +3,8 @@
 .idea/
 .env
 node_modules/
+.gitignore
 
-migrations/
 build/
 typechain/
 .DS_Store
@@ -19,3 +19,6 @@ truffle-config.js
 env.json
 package.json
 migrations/2_deploy_contracts.js
+.gitignore
+package-lock.json
+package.json
