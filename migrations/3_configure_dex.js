@@ -28,7 +28,7 @@ async function showPairs(factory, nebula, borealis, wnear) {
     await factory.getPair(borealis, wnear).then(res => console.log("BOREALIS PAIR: ", res));
 }
 
-module.exports = async (deployer, network, [account]) {
+module.exports = async (deployer, network, [account]) => {
     let factory;
     let nebula;
     let borealis;
