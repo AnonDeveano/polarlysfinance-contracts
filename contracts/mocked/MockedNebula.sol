@@ -5,9 +5,7 @@ import "../Nebula.sol";
 
 
 contract MockedNebula is Nebula{
-    constructor() public ERC20("NEBULA", "NEBULA") {
-        _mint(msg.sender, 5000 ether);
-    }
+    constructor() public {}
 
     function mint(uint256 amount) external returns (bool) {
         _mint(msg.sender, amount);
