@@ -19,6 +19,9 @@ contract Nebula is ERC20Burnable, Operator {
     using SafeMath8 for uint8;
     using SafeMath for uint256;
 
+    address public nebulaOracle;
+    address public taxOffice;
+
     // Initial distribution for the first 24h genesis pools
     uint256 public constant INITIAL_LAUNCH_DISTRIBUTION = 30000 ether; 
     // Distribution for airdrops wallet
@@ -26,6 +29,9 @@ contract Nebula is ERC20Burnable, Operator {
 
     // Have the rewards been distributed to the pools
     bool public rewardPoolDistributed = false;
+
+    event TaxOfficeTransferred(address oldAddress, address newAddress);
+
 
     /**
      * @notice Constructs the NEBULA ERC-20 contract.
