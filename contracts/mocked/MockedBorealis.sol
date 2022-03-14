@@ -9,13 +9,13 @@ contract MockedBorealis is Borealis {
         uint256 _startTime,
         address _communityFund,
         address _devFund,
-        uint256 _teamFund
+        address _teamFund
     ) public Borealis(
         _startTime,
         _communityFund,
         _devFund,
-        _teamFund
-    ) 
+        _teamFund 
+    ) {}
 
     function mint(uint256 amount) external returns (bool) {
         _mint(msg.sender, amount);
