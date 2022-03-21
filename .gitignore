@@ -9,6 +9,7 @@ build/
 typechain/
 .DS_Store
 coverage/
+oldmigs/
 coverage.json
 
 hardhat.config.ts

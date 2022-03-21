@@ -1,9 +1,10 @@
 const NebulaGenesisRewardPool = artifacts.require('NebulaGenesisRewardPool');
 const MockedCommissionToken = artifacts.require('MockedCommissionToken');
+const Nebula = artifacts.require('Nebula');
 
 module.exports = async (deployer, network) => {
-    const Nebula = '';
-    const daoFund = '';
+    const Nebula = Nebula.deployed();
+    const daoFund = '0x86A247546cA84735542bF61BEE722b0250bDFfc9';
     let commissionTokens = [];
     const _poolStartTime = '0';
 
