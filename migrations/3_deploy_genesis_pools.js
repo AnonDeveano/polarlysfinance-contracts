@@ -1,17 +1,11 @@
 const NebulaGenesisRewardPool = artifacts.require('NebulaGenesisRewardPool');
-const MockedCommissionToken = artifacts.require('MockedCommissionToken');
 const Nebula = artifacts.require('Nebula');
 
-module.exports = async (deployer, network) => {
-    const Nebula = Nebula.deployed();
-    const daoFund = '0x86A247546cA84735542bF61BEE722b0250bDFfc9';
-    let commissionTokens = [];
-    const _poolStartTime = '0';
+module.exports = async (deployer) => {
+    const Nebula = '0x2dEC88f821f4a84C19Aee910E00DB750Bbc6455D';
+    const _poolStartTime = 1659069176;
+    // 1645106400
+    // 1649069176
 
-    if (network == 'testnet') {
-        await deployer.deploy(MockedCommissionToken);
-        await MockedCommissionToken.deployed().then(res => commissionTokens.push(res.address));
-    }
-
-    await deployer.deploy(NebulaGenesisRewardPool, Nebula, daoFund, _poolStartTime);
+    await deployer.deploy(NebulaGenesisRewardPool, Nebula, _poolStartTime);
 }
