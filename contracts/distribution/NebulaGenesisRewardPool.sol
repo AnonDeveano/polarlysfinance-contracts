@@ -68,12 +68,10 @@ contract NebulaGenesisRewardPool {
 
     constructor(
         address _nebula,
-        address _daoFund,
         uint256 _poolStartTime
     ) public {
         require(block.timestamp < _poolStartTime, "late");
         if (_nebula != address(0)) nebula = IERC20(_nebula);
-        if (_daoFund != address(0)) daoFundAddress = _daoFund;
 
         poolStartTime = _poolStartTime;
         poolEndTime = poolStartTime + runningTime;
