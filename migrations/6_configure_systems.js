@@ -31,12 +31,13 @@ module.exports = async (deployer) => {
     // function initialize(address _nebula, address _stardust, address _borealis, address _nebulaOracle, address _warpdrive, uint256 _startTime
     await deployer.deploy(Treasury);
     treasuryInstance = await Treasury.deployed();
+    treasuryAddress = treasuryInstance.address;
     await treasuryInstance.initialize(Nebula, Stardust, Borealis, Oracle, WarpDrive, treasury_start_time);
 
     // Warp Drive initialize
     await deployer.deploy(WarpDrive);
     warpDriveInstance = await WarpDrive.deployed();
-    await warpDriveInstance.initialize(Nebula, Borealis, treasuryInstance.address);
+    await warpDriveInstance.initialize(Nebula, Borealis, treasuryAddress);
 
     // Oracle update 
     await deployer.deploy(Oracle);
