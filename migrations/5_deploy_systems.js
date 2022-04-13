@@ -20,4 +20,7 @@ module.exports = async (deployer) => {
 
     // TaxOfficeV2
     await deployer.deploy(TaxOfficeV2, nebula, wnear, router);
+
+    // WarpDrive
+    await deployer.deploy(WarpDrive);
 }
