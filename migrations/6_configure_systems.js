@@ -36,7 +36,7 @@ module.exports = async (deployer) => {
     const taxOfficeV2 = await TaxOfficeV2.deployed();
     const warpDrive = await WarpDrive.deployed();
 
-    await treasury.initialize(NEBULA, STARDUST, BOREALIS, oracle.address, warpDrive.address, treasury_start_time);
+    // await treasury.initialize(NEBULA, STARDUST, BOREALIS, oracle.address, warpDrive.address, treasury_start_time);
 
     await warpDrive.initialize(NEBULA, BOREALIS, treasury.address);
 
